@@ -14,17 +14,26 @@ class GroupsController < ApplicationController
   def new
     @group = Group.new
   end
+
   def create
     @group = Group.new(group_params)
     @group.save
 
       redirect_to groups_path
-end
+  end
 
-private
+  def update
+    @group = Group.find(params[:id])
 
-def group_params
-  params.require(:group).permit(:title, :description)
-end
+    @group.update(group_params)
+
+    redirect_to groups_path, notice: "Update Success"
+  end
+
+  private
+
+  def group_params
+    params.require(:group).permit(:title, :description)
+  end
 
 end
